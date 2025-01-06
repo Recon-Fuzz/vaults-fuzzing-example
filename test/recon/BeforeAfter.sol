@@ -5,18 +5,30 @@ import {Setup} from "./Setup.sol";
 
 // ghost variables for tracking state variable values before and after function calls
 abstract contract BeforeAfter is Setup {
-    // struct Vars {
-    //     uint256 counter_number;
-    // }
+    struct Vars {
+        uint256 vaultTotalShares;
+        uint256 ghostTotalShares;
+        uint256 pricePerShare;
+    }
 
-    // Vars internal _before;
-    // Vars internal _after;
+    Vars internal _before;
+    Vars internal _after;
 
-    // function __before() internal {
-    //     _before.counter_number = counter.number();
-    // }
+    modifier updateBeforeAfter() {
+        __before();
+        _;
+        __after();
+    }
 
-    // function __after() internal {
-    //     _after.counter_number = counter.number();
-    // }
+    function __before() internal {
+        _before.vaultTotalShares = eRC4626Tester.totalSupply();
+        _before.ghostTotalShares = eRC4626Tester.balanceOf(address(this));
+        _before.pricePerShare = eRC4626Tester.previewMint(1);
+    }
+
+    function __after() internal {
+        _after.vaultTotalShares = eRC4626Tester.totalSupply();
+        _after.ghostTotalShares = eRC4626Tester.balanceOf(address(this));
+        _after.pricePerShare = eRC4626Tester.previewMint(1);
+    }
 }

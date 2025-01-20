@@ -7,7 +7,7 @@ This tester was built using the [create-chimera-app](https://github.com/Recon-Fu
 ### Usage 
 
 Prerequisites:
-1. [Foundry] installed
+1. [Foundry](https://book.getfoundry.sh/getting-started/installation) installed
 2. [Echidna](https://github.com/crytic/echidna) and/or [Medusa](https://github.com/crytic/medusa) installed 
 
 #### Echidna

@@ -18,6 +18,6 @@ abstract contract Properties is BeforeAfter, Asserts {
     
     // Internal property that only gets checked for handlers that use the checks modifier
     function property_price_per_share() internal {
-        eq(_after.pricePerShare, _after.pricePerShare, "pricePerShare should not change");
+        eq(_before.pricePerShare, _after.pricePerShare, "pricePerShare should not change");
     }
 }

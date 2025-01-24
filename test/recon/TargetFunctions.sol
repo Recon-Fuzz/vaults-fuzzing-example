@@ -9,12 +9,20 @@ import {vm} from "@chimera/Hevm.sol";
 
 abstract contract TargetFunctions is Properties, BaseTargetFunctions {
 
-    function vault_approve(address spender, uint256 value) updateBeforeAfter checks public {
+    function vault_approve(address spender, uint256 value) public {
+        __before();
         vault.approve(spender, value);
+        __after();
+
+        eq(_before.pricePerShare, _after.pricePerShare, "pricePerShare should not change");
     }
     
-    function vault_transfer(address to, uint256 value) updateBeforeAfter checks public {
+    function vault_transfer(address to, uint256 value) public {
+        __before();
         vault.transfer(to, value);
+        __after();
+
+        eq(_before.pricePerShare, _after.pricePerShare, "pricePerShare should not change");
     }
 
     function vault_deposit(uint256 assets, address receiver) updateBeforeAfter public {        

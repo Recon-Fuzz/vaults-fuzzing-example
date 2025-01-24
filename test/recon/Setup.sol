@@ -9,12 +9,12 @@ import {MockERC20Tester} from "src/MockERC20Tester.sol";
 
 abstract contract Setup is BaseSetup {
     MockERC20Tester internal underlyingAsset;
-    ERC4626Tester internal eRC4626Tester;
+    ERC4626Tester internal vault;
 
     uint256 internal initialSupply = 1e26;
 
     function setup() internal virtual override {
         underlyingAsset = new MockERC20Tester(address(this), initialSupply, "MockERC20", "MRC20", 18);
-        eRC4626Tester = new ERC4626Tester(IERC20(address(underlyingAsset)));
+        vault = new ERC4626Tester(IERC20(address(underlyingAsset)));
     }
 }

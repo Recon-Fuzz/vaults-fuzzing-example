@@ -21,14 +21,14 @@ abstract contract BeforeAfter is Setup {
     }
 
     function __before() internal {
-        _before.vaultTotalShares = eRC4626Tester.totalSupply();
-        _before.ghostTotalShares = eRC4626Tester.balanceOf(address(this));
-        _before.pricePerShare = eRC4626Tester.previewMint(1);
+        _before.vaultTotalShares = vault.totalSupply();
+        _before.ghostTotalShares = vault.balanceOf(address(this));
+        _before.pricePerShare = vault.previewMint(10**vault.decimals());
     }
 
     function __after() internal {
-        _after.vaultTotalShares = eRC4626Tester.totalSupply();
-        _after.ghostTotalShares = eRC4626Tester.balanceOf(address(this));
-        _after.pricePerShare = eRC4626Tester.previewMint(1);
+        _after.vaultTotalShares = vault.totalSupply();
+        _after.ghostTotalShares = vault.balanceOf(address(this));
+        _after.pricePerShare = vault.previewMint(10**vault.decimals());
     }
 }

@@ -28,7 +28,7 @@ contract ERC4626Tester is ERC4626 {
 
     uint8 public decimalsOffset;
 
-    constructor(IERC20 _asset) ERC4626(_asset) ERC20("MockERC4626Tester", "MCT") {}
+    constructor(IERC20 _asset) ERC4626(_asset) ERC20("Mockvault", "MCT") {}
 
     /// @dev Set the decimal offset. Only possible with no supply.
     function setDecimalsOffset(uint8 targetDecimalsOffset) external {

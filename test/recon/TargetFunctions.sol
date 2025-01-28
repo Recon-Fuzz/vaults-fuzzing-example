@@ -39,12 +39,12 @@ abstract contract TargetFunctions is Properties, BaseTargetFunctions {
         eq(vaultBalanceAfter, vaultBalanceBefore + expectedAssets, "vaultBalanceAfter must increase by expectedAssets amount");
     }
 
-    function vault_redeem(uint256 shares, address receiver, address owner) updateBeforeAfter public {
+    function vault_redeem(uint256 shares, address receiver, address owner) public {
         __before();
         vault.redeem(shares, receiver, owner);
         __after();
 
-        eq(_after.vaultTotalShares, _before.vaultTotalShares - shares, "vault totalSupply should decrease by shares amount on redeem");
+        eq(_after.vaultTotalShares, _before.vaultTotalShares - shares, "vault totalSupply should decrease by shares amount");
     }
 
     function vault_withdraw(uint256 assets, address receiver, address owner) updateBeforeAfter public {

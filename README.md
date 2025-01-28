@@ -1,6 +1,6 @@
 ## Vault Fuzzing Tester
 
-This example is meant to accompany the post on the Recon substack for implementing invariants in an ERC4626 vault. 
+This example is meant to accompany [this post on the Recon substack](https://open.substack.com/pub/getrecon/p/implementing-your-first-few-invariants?r=34r2zr&utm_campaign=post&utm_medium=web) for implementing invariants in an ERC4626 vault. 
 
 This tester was built using the [create-chimera-app](https://github.com/Recon-Fuzz/create-chimera-app/tree/main) template.
 

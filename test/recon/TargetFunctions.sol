@@ -40,12 +40,11 @@ abstract contract TargetFunctions is Properties, BaseTargetFunctions {
     }
 
     function vault_redeem(uint256 shares, address receiver, address owner) updateBeforeAfter public {
-        uint256 totalSupplyBefore = vault.totalSupply();
-        
+        __before();
         vault.redeem(shares, receiver, owner);
+        __after();
 
-        uint256 totalSupplyAfter = vault.totalSupply();
-        eq(totalSupplyAfter, totalSupplyBefore - shares, "totalSupplyAfter must decrease by shares amount");
+        eq(_after.vaultTotalShares, _before.vaultTotalShares - shares, "vault totalSupply should decrease by shares amount on redeem");
     }
 
     function vault_withdraw(uint256 assets, address receiver, address owner) updateBeforeAfter public {

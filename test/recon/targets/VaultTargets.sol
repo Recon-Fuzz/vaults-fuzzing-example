@@ -9,12 +9,12 @@ import {vm} from "@chimera/Hevm.sol";
 
 abstract contract VaultTargets is Properties, BaseTargetFunctions {
 
-    function vault_approve(address spender, uint256 value) public asActor {
+    function vault_approve(address spender, uint256 value) public updateGhosts asActor {
         vault.approve(spender, value);
     }
     
     /// @dev We clamp the possible recipients for the property_total_supply_solvency check
-    function vault_transfer(uint256 toEntropy, uint256 value) public asActor {
+    function vault_transfer(uint256 toEntropy, uint256 value) public updateGhosts asActor {
         address to = _getRandomActor(toEntropy);
         vault.transfer(to, value);
     }
@@ -36,11 +36,11 @@ abstract contract VaultTargets is Properties, BaseTargetFunctions {
         vault.mint(shares, _getActor());
     }
 
-    function vault_redeem(uint256 shares) public updateGhosts asActor {
+    function vault_redeem(uint256 shares) public updateGhostsWithOpType(OpType.REMOVE) asActor {
         vault.redeem(shares, _getActor(), _getActor());
     }
 
-    function vault_withdraw(uint256 assets) public updateGhosts asActor {
+    function vault_withdraw(uint256 assets) public updateGhostsWithOpType(OpType.REMOVE) asActor {
         vault.withdraw(assets, _getActor(), _getActor());
     }
 

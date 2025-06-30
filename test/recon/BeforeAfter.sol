@@ -5,6 +5,12 @@ import {Setup} from "./Setup.sol";
 
 // ghost variables for tracking state variable values before and after function calls
 abstract contract BeforeAfter is Setup {
+    enum OpType {
+        GENERIC,
+        ADD,
+        REMOVE
+    }
+
     struct Vars {
         uint256 vaultTotalShares;
         uint256 ghostTotalShares;
@@ -13,8 +19,17 @@ abstract contract BeforeAfter is Setup {
 
     Vars internal _before;
     Vars internal _after;
+    OpType internal currentOperation;
 
     modifier updateGhosts() {
+        currentOperation = OpType.GENERIC;
+        __before();
+        _;
+        __after();
+    }
+
+    modifier updateGhostsWithOpType(OpType opType) {
+        currentOperation = opType;
         __before();
         _;
         __after();

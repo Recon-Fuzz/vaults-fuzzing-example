@@ -9,10 +9,13 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {ActorManager} from "recon/ActorManager.sol";
 import {AssetManager} from "recon/AssetManager.sol";
 
+// Helpers
+import {Utils} from "recon/Utils.sol";
+
 import {ERC4626Tester} from "src/ERC4626Tester.sol";
 import {MockERC20Tester} from "src/MockERC20Tester.sol";
 
-abstract contract Setup is BaseSetup, ActorManager, AssetManager {
+abstract contract Setup is BaseSetup, ActorManager, AssetManager, Utils {
     MockERC20Tester internal underlyingAsset;
     ERC4626Tester internal vault;
 

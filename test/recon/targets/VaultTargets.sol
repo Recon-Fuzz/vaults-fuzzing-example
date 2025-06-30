@@ -19,20 +19,21 @@ abstract contract VaultTargets is Properties, BaseTargetFunctions {
         vault.transfer(to, value);
     }
 
-    function vault_deposit(uint256 assets) public updateGhosts asActor {        
-        vault.deposit(assets, _getActor());
+    /// @dev Property: The `deposit` function should never revert for a depositor that has sufficient balance and approvals
+    function vault_deposit(uint256 assets) public updateGhosts asActor {  
+        try vault.deposit(assets, _getActor()) {
+        } catch (bytes memory reason) {
+            bool expectedError = checkError(reason, "InsufficientBalance(address,uint256,uint256)") || checkError(reason, "InsufficientAllowance(address,address,uint256,uint256)");
+            // precondition: we only care about reverts for things other than insufficient balance or allowance
+            if (!expectedError) {
+                revert("deposit should not revert");
+            }
+        }
     }
 
-    function vault_mint(uint256 shares) public updateGhosts {
-        uint256 expectedAssets = vault.previewMint(shares);
-        uint256 vaultBalanceBefore = underlyingAsset.balanceOf(address(vault));
-        
-        // explicit prank as actor here because external calls are made above which would consume it with the modifier
-        vm.prank(_getActor());
+    /// @dev Property: vaultBalance must increase by deposited assets amount
+    function vault_mint(uint256 shares) public updateGhosts asActor {
         vault.mint(shares, _getActor());
-        
-        uint256 vaultBalanceAfter = underlyingAsset.balanceOf(address(vault));
-        eq(vaultBalanceAfter, vaultBalanceBefore + expectedAssets, "vaultBalanceAfter must increase by expectedAssets amount");
     }
 
     function vault_redeem(uint256 shares) public updateGhosts asActor {

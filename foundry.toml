@@ -6,7 +6,8 @@ no_match_contract = "CryticTester"
 remappings = [
     "forge-std/=lib/forge-std/src",
     "openzeppelin-contracts/=lib/openzeppelin-contracts/src",
-    "chimera/=lib/chimera/src"
+    "chimera/=lib/chimera/src",
+    "recon/=lib/setup-helpers/src"
 ]
 
 optimizer = false

@@ -12,8 +12,6 @@ abstract contract BeforeAfter is Setup {
     }
 
     struct Vars {
-        uint256 vaultTotalShares;
-        uint256 ghostTotalShares;
         uint256 pricePerShare;
     }
 
@@ -36,14 +34,10 @@ abstract contract BeforeAfter is Setup {
     }
 
     function __before() internal {
-        _before.vaultTotalShares = vault.totalSupply();
-        _before.ghostTotalShares = vault.balanceOf(address(this));
         _before.pricePerShare = vault.previewMint(10**vault.decimals());
     }
 
     function __after() internal {
-        _after.vaultTotalShares = vault.totalSupply();
-        _after.ghostTotalShares = vault.balanceOf(address(this));
         _after.pricePerShare = vault.previewMint(10**vault.decimals());
     }
 }

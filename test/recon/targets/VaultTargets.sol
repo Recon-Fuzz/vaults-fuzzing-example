@@ -23,10 +23,12 @@ abstract contract VaultTargets is Properties, BaseTargetFunctions {
         vault.deposit(assets, _getActor());
     }
 
-    function vault_mint(uint256 shares) public updateGhosts asActor {
+    function vault_mint(uint256 shares) public updateGhosts {
         uint256 expectedAssets = vault.previewMint(shares);
         uint256 vaultBalanceBefore = underlyingAsset.balanceOf(address(vault));
         
+        // explicit prank as actor here because external calls are made above which would consume it with the modifier
+        vm.prank(_getActor());
         vault.mint(shares, _getActor());
         
         uint256 vaultBalanceAfter = underlyingAsset.balanceOf(address(vault));

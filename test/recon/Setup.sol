@@ -38,5 +38,10 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager {
 
         // Deploy a new vault
         vault = new VulnerableERC4626Vault(IERC20(_underlyingAsset));
+
+        // Mints the deployed asset to all actors and sets max allowances for the vault
+        address[] memory approvalArray = new address[](1);
+        approvalArray[0] = address(vault);
+        _finalizeAssetDeployment(_getActors(), approvalArray, type(uint88).max);
     }
 }

@@ -11,7 +11,7 @@ import {MockERC20} from "recon/MockERC20.sol";
 // Target functions that are effectively inherited from the Actor and AssetManagers
 // Once properly standardized, managers will expose these by default
 // Keeping them out makes your project more custom
-abstract contract ManagersTargets is
+abstract contract ManagerTargets is
     BaseTargetFunctions,
     Properties
 {

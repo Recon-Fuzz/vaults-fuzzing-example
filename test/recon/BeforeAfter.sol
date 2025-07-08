@@ -37,11 +37,9 @@ abstract contract BeforeAfter is Setup {
 
     function __before() internal {
         _before.pricePerShare = vault.convertToShares(10**vault.decimals());
-        // _before.pricePerShare = vault.previewMint(10**vault.decimals());
     }
 
     function __after() internal {
         _after.pricePerShare = vault.convertToShares(10**vault.decimals());
-        // _after.pricePerShare = vault.previewMint(10**vault.decimals());
     }
 }

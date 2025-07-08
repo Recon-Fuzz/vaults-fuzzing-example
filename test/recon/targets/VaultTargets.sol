@@ -9,11 +9,11 @@ import {vm} from "@chimera/Hevm.sol";
 
 abstract contract VaultTargets is BaseTargetFunctions, Properties {
 
-    function vault_approve(address spender, uint256 value) public asActor {
+    function vault_approve(address spender, uint256 value) public updateGhosts asActor {
         vault.approve(spender, value);
     }
     
-    function vault_transfer(address to, uint256 value) public asActor {
+    function vault_transfer(address to, uint256 value) public updateGhosts asActor {
         vault.transfer(to, value);
     }
 

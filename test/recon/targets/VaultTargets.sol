@@ -22,14 +22,7 @@ abstract contract VaultTargets is BaseTargetFunctions, Properties {
     }
 
     function vault_mint(uint256 shares) public updateGhostsWithOpType(OpType.ADD) asActor {
-        uint256 expectedAssets = vault.previewMint(shares);
-        uint256 actorBalanceBefore = underlyingAsset.balanceOf(_getActor());
-        
-        vm.prank(_getActor());
         vault.mint(shares, _getActor());
-        
-        uint256 actorBalanceAfter = underlyingAsset.balanceOf(_getActor());
-        // eq(actorBalanceAfter, actorBalanceBefore - expectedAssets, "actor balance should decrease by expectedAssets amount");
     }
 
     function vault_redeem(uint256 shares) public updateGhostsWithOpType(OpType.REMOVE) asActor {

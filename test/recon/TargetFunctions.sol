@@ -14,5 +14,4 @@ import {VaultTargets} from "./targets/VaultTargets.sol";
 abstract contract TargetFunctions is
     VaultTargets,
     ManagerTargets
-{
-}
+{}

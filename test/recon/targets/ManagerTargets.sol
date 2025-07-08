@@ -35,11 +35,8 @@ abstract contract ManagerTargets is
     }
 
     /// === GHOST UPDATING HANDLERS ===///
-    /// We `updateGhosts` cause you never know (e.g. donations)
-    /// If you don't want to track donations, remove the `updateGhosts`
 
     /// @dev Approve to arbitrary address, uses Actor by default
-    /// NOTE: You're almost always better off setting approvals in `Setup`
     function asset_approve(address to, uint128 amt) public asActor {
         MockERC20(_getAsset()).approve(to, amt);
     }

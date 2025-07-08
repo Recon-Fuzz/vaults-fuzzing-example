@@ -82,18 +82,7 @@ contract ERC4626Vault is MockERC20 {
 
     function previewMint(uint256 shares) public view virtual returns (uint256) {
         uint256 supply = totalSupply;
-        if (supply == 0) return shares;
-        
-        // VULNERABILITY: Inconsistent rounding direction with deposit
-        // This creates arbitrage opportunities when combined with the precision loss attack
-        
-        uint256 totalAssets_ = totalAssets();
-        
-        // Using round-up calculation for mint (opposite of deposit's round-down)
-        // This creates a profitable arbitrage loop when precision loss occurs
-        uint256 assets = (shares * totalAssets_ + supply - 1) / supply;  // Round up
-        
-        return assets;
+        return supply == 0 ? shares : shares * totalAssets() / supply;
     }
 
     function previewWithdraw(uint256 assets) public view virtual returns (uint256) {
@@ -103,14 +92,6 @@ contract ERC4626Vault is MockERC20 {
 
     function previewRedeem(uint256 shares) public view virtual returns (uint256) {
         uint256 supply = totalSupply;
-        // VULNERABILITY: Incorrect calculation that inflates the asset amount
-        // Should be: shares * totalAssets() / supply
-        // But we're using: shares * totalAssets() / (supply - shares)
-        // This creates a situation where the more shares you redeem, the more assets you get per share
-        // console2.log("supply %e", supply);
-        // console2.log("shares %e", shares);
-        // console2.log("totalAssets %e", totalAssets());
-        // return supply == 0 ? shares : shares * totalAssets() / (supply - shares);
         return supply == 0 ? shares : shares * totalAssets() / supply;
     }
 

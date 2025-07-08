@@ -12,8 +12,6 @@ enum OpType {
 // ghost variables for tracking state variable values before and after function calls
 abstract contract BeforeAfter is Setup {
     struct Vars {
-        uint256 vaultTotalShares;
-        uint256 ghostTotalShares;
         uint256 pricePerShare;
     }
 

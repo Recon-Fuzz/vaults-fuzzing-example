@@ -16,7 +16,8 @@ abstract contract Setup is BaseSetup, ActorManager, AssetManager {
     MockERC20 internal underlyingAsset;
     ERC4626Vault internal vault;
 
-    uint256 internal initialSupply = 1e26;
+    int256 maxPriceDifferenceIncrease;
+    int256 maxPriceDifferenceDecrease;
 
     /// === MODIFIERS === ///
     modifier asAdmin {
